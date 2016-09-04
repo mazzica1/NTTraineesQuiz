@@ -83,7 +83,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         final Dialog commentDialog = new Dialog(this);
         commentDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         commentDialog.setContentView(R.layout.comment_dialog);
-
+        comment = null;
         nameText = (EditText) commentDialog.findViewById(R.id.edName);
         commentText = (EditText) commentDialog.findViewById(R.id.edComment);
         commentButton = (Button) commentDialog.findViewById(R.id.btnComment);
@@ -110,7 +110,7 @@ public class ItemDetailActivity extends AppCompatActivity {
             }
         });
         commentDialog.show();
-        return comment ;
+        return comment;
     }
 
     @Override
