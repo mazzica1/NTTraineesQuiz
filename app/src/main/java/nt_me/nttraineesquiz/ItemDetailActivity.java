@@ -1,20 +1,24 @@
 package nt_me.nttraineesquiz;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import nt_me.nttraineesquiz.dummy.DummyContent;
 
 /**
  * An activity representing a single Item detail screen. This
@@ -27,7 +31,6 @@ public class ItemDetailActivity extends AppCompatActivity {
     EditText nameText, commentText;
     Button commentButton;
     Comment comment;
-    DummyContent dummyContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +43,9 @@ public class ItemDetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                getComment();
             }
         });
 
@@ -72,6 +76,43 @@ public class ItemDetailActivity extends AppCompatActivity {
                     .add(R.id.item_detail_container, fragment)
                     .commit();
         }
+
+    }
+
+    public Comment getComment() {
+        final Dialog commentDialog = new Dialog(this);
+        commentDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        commentDialog.setContentView(R.layout.comment_dialog);
+        comment = null;
+        nameText = (EditText) commentDialog.findViewById(R.id.edName);
+        commentText = (EditText) commentDialog.findViewById(R.id.edComment);
+        commentButton = (Button) commentDialog.findViewById(R.id.btnComment);
+        Button cancelButton = (Button) commentDialog.findViewById(R.id.btnCancel);
+        commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (commentText.getText().toString().isEmpty()) {
+                    commentText.setError("Empty Field");
+                } else if (nameText.getText().toString().isEmpty()) {
+                    nameText.setError("Empty Field");
+                } else {
+                    DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
+                    String date = df.format(Calendar.getInstance().getTime());
+                    comment = new Comment(nameText.getText().toString(), commentText.getText().toString(), date);
+                    DummyContent.ITEM_MAP.get(getIntent().getStringExtra(ItemDetailFragment.ARG_ITEM_ID)).addComment(comment);
+
+                    commentDialog.cancel();
+                }
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commentDialog.cancel();
+            }
+        });
+        commentDialog.show();
+        return comment;
     }
 
     @Override
