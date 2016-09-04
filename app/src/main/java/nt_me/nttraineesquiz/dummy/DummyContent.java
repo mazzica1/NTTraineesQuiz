@@ -68,13 +68,13 @@ public class DummyContent {
             this.details = details;
             comments = new ArrayList<Comment>();
 
-
-
         }
         public void  addComment(Comment c) {
             comments.add(c);
         }
-
+        public ArrayList<Comment>getComments(){
+            return comments;
+        }
         @Override
         public String toString() {
             return content;
