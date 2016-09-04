@@ -15,6 +15,7 @@ import nt_me.nttraineesquiz.Comment;
  */
 public class DummyContent {
 
+
     /**
      * An array of sample (dummy) items.
      */
@@ -34,12 +35,12 @@ public class DummyContent {
         }
     }
 
-    private static void addItem(DummyItem item) {
+    public static void addItem(DummyItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
 
-    private static DummyItem createDummyItem(int position) {
+    public static DummyItem createDummyItem(int position) {
         return new DummyItem(String.valueOf(position), "Item " + position, makeDetails(position));
     }
 
