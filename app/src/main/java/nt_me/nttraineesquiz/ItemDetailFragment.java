@@ -60,6 +60,10 @@ public class ItemDetailFragment extends Fragment {
 
             Activity activity = this.getActivity();
             comments =mItem.getComments();
+            addComment(new Comment("Amin","not good","15/3"));
+            addComment(new Comment("mahmoud","good","15/8"));
+            addComment(new Comment("mohamed","excellent","20/4"));
+
 
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
@@ -88,8 +92,6 @@ public class ItemDetailFragment extends Fragment {
             list.setAdapter(commentAdapter);
 
         }
-
-
 
         return rootView;
     }
