@@ -7,7 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import nt_me.nttraineesquiz.dummy.DummyContent;
 
@@ -22,6 +26,11 @@ public class ItemDetailFragment extends Fragment {
      * The fragment argument representing the item ID that this fragment
      * represents.
      */
+    public ListView list;
+    ArrayList<Comment> comments;
+    ArrayList<String> details;
+     ArrayAdapter<String> commentAdapter;
+
     public static final String ARG_ITEM_ID = "item_id";
 
     /**
@@ -40,17 +49,23 @@ public class ItemDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
             mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            details = new ArrayList<String>();
+            commentAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,details);
 
             Activity activity = this.getActivity();
+            comments =mItem.getComments();
+
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
                 appBarLayout.setTitle(mItem.content);
             }
+
         }
     }
 
@@ -58,12 +73,33 @@ public class ItemDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.item_detail, container, false);
+        list =(ListView)rootView.findViewById(R.id.comment_list);
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.details);
+
+            for(int i=0;i<comments.size();i++){
+                Comment c=comments.get(i);
+                String s= parseComment(c);
+                details.add(s);
+            }
+
+            list.setAdapter(commentAdapter);
+
         }
 
+
+
         return rootView;
+    }
+    public void addComment(Comment c){
+        mItem.addComment(c);
+        String s= parseComment(c);
+        details.add(s);
+        commentAdapter.notifyDataSetChanged();
+    }
+    private String parseComment(Comment c){
+        return  "Name: "+c.getName()+", Comment: "+c.getComment()+", Date: "+c.getDate();
     }
 }
