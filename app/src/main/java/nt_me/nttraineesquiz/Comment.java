@@ -1,26 +1,24 @@
 package nt_me.nttraineesquiz;
 
-import java.util.Date;
-
 /**
  * Created by Mahmoud on 9/4/2016.
  */
 public class Comment {
     String name;
     String comment;
-    Date date;
+    String date;
 
-    public Comment(String name, String comment, Date date) {
+    public Comment(String name, String comment, String date) {
         this.name = name;
         this.comment = comment;
         this.date = date;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
