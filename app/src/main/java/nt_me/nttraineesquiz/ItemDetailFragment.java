@@ -1,8 +1,8 @@
 package nt_me.nttraineesquiz;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,15 +39,15 @@ public class ItemDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            ItemDetailActivity itemDetailActivity = (ItemDetailActivity) getActivity();
-            if (itemDetailActivity.getComment() != null) {
-                mItem.addComment(itemDetailActivity.getComment());
-            }
             mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            details = new ArrayList<String>();
+            commentAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,details);
+
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
