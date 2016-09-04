@@ -27,9 +27,7 @@ public class ItemDetailFragment extends Fragment {
      * represents.
      */
     public ListView list;
-    ArrayList<Comment> comments;
-    ArrayList<String> details;
-     ArrayAdapter<String> commentAdapter;
+    ArrayAdapter<Comment> commentAdapter;
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -55,11 +53,18 @@ public class ItemDetailFragment extends Fragment {
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
             mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
-            details = new ArrayList<String>();
-            commentAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,details);
+            commentAdapter = new ArrayAdapter<Comment>(this.getActivity(), android.R.layout.simple_list_item_1 ,mItem.comments) {
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    TextView view = (TextView) super.getView(position, convertView, parent);
+                    // Replace text with my own
+                    view.setText(getItem(position).getName());
+                    return view;
+                }
+            };
 
             Activity activity = this.getActivity();
-            comments =mItem.getComments();
+//            comments =mItem.getComments();
             addComment(new Comment("Amin","not good","15/3"));
             addComment(new Comment("mahmoud","good","15/8"));
             addComment(new Comment("mohamed","excellent","20/4"));
@@ -82,15 +87,7 @@ public class ItemDetailFragment extends Fragment {
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
             ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.details);
-
-            for(int i=0;i<comments.size();i++){
-                Comment c=comments.get(i);
-                String s= parseComment(c);
-                details.add(s);
-            }
-
             list.setAdapter(commentAdapter);
-
         }
 
         return rootView;
@@ -98,7 +95,6 @@ public class ItemDetailFragment extends Fragment {
     public void addComment(Comment c){
         mItem.addComment(c);
         String s= parseComment(c);
-        details.add(s);
         commentAdapter.notifyDataSetChanged();
     }
     private String parseComment(Comment c){

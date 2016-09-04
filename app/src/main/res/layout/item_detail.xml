@@ -1,9 +1,28 @@
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
+
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_detail"
     style="?android:attr/textAppearanceLarge"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
     android:padding="16dp"
     android:textIsSelectable="true"
-    tools:context="nt_me.nttraineesquiz.ItemDetailFragment" />
+    tools:context="nt_me.nttraineesquiz.ItemDetailFragment"
+    />
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/comment_list"
+android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+android:padding="16dp"
+android:textIsSelectable="true"
+tools:context="nt_me.nttraineesquiz.ItemDetailFragment"
+    />
+</LinearLayout>
