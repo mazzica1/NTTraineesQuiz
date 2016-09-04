@@ -1,9 +1,12 @@
 package nt_me.nttraineesquiz.dummy;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import nt_me.nttraineesquiz.Comment;
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -57,16 +60,26 @@ public class DummyContent {
         public final String id;
         public final String content;
         public final String details;
+        public ArrayList<Comment> comments;
 
         public DummyItem(String id, String content, String details) {
             this.id = id;
             this.content = content;
             this.details = details;
-        }
+            comments = new ArrayList<Comment>();
 
+        }
+        public void  addComment(Comment c) {
+            comments.add(c);
+        }
+        public ArrayList<Comment>getComments(){
+            return comments;
+        }
         @Override
         public String toString() {
             return content;
         }
+
+        }
     }
-}
+
